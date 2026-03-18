@@ -10,7 +10,7 @@ const config: Config = {
       fontFamily: {
         sans:    ['var(--font-body)', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-display)', 'system-ui', 'sans-serif'],
       },
       colors: {
         cream: {

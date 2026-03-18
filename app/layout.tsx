@@ -1,25 +1,18 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
+import { Fredoka, Nunito } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { CartProvider } from '@/components/CartProvider'
 
-const centralAvenue = localFont({
-  src: '../public/fonts/Central-Avenue.otf',
+const fredoka = Fredoka({
+  subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
 })
 
-const ttNorms = localFont({
-  src: '../public/fonts/TTNorms-Bold.otf',
-  variable: '--font-heading',
-  weight: '700',
-  display: 'swap',
-})
-
-const newGrotesk = localFont({
-  src: '../public/fonts/New-Grotesk-Square-SIX.otf',
+const nunito = Nunito({
+  subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
 })
@@ -59,7 +52,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${centralAvenue.variable} ${ttNorms.variable} ${newGrotesk.variable}`}>
+    <html lang="en" className={`${fredoka.variable} ${nunito.variable}`}>
       <body className="min-h-screen bg-cream text-charcoal antialiased flex flex-col font-sans">
         <CartProvider>
           <Navbar />

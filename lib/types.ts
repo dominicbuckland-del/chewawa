@@ -1,4 +1,5 @@
 export type DogSize = 'small' | 'medium' | 'large'
+export type BoxSlot = 'daily-dental' | 'natural-chew' | 'breed-spotlight'
 
 export interface Product {
   id: string
@@ -10,6 +11,7 @@ export interface Product {
   subscriptionPrice: number  // cents (discounted)
   images: string[]
   category: string
+  boxSlot: BoxSlot           // which subscription box slot this fills
   dogSizes: DogSize[]
   weightGrams: number
   stock: number
@@ -17,6 +19,8 @@ export interface Product {
   ingredients: string
   rating: number
   reviewCount: number
+  vohcAccepted?: boolean     // VOHC seal of acceptance
+  breedNote?: string         // breed-specific education note
 }
 
 export interface CartItem {
@@ -53,10 +57,10 @@ export interface SubscriptionConfig {
   dogSize: DogSize
 }
 
-export const PLAN_DETAILS: Record<SubscriptionPlan, { name: string; chews: number; price: number; description: string }> = {
-  basic:    { name: 'Starter',  chews: 2, price: 2999,  description: '2 dental chews per month' },
-  premium:  { name: 'Popular',  chews: 4, price: 4499,  description: '4 dental chews per month' },
-  ultimate: { name: 'Ultimate', chews: 6, price: 5999,  description: '6 dental chews + bonus toy' },
+export const PLAN_DETAILS: Record<SubscriptionPlan, { name: string; items: string; price: number; description: string; slots: BoxSlot[] }> = {
+  basic:    { name: 'Essential',  items: 'Daily dental chew (30-pack)', price: 3499,  description: 'VOHC-accepted daily dental chew sized for your dog', slots: ['daily-dental'] },
+  premium:  { name: 'Complete',   items: 'Daily dental + natural chew', price: 4999,  description: 'Daily dental chew plus a premium natural enrichment chew', slots: ['daily-dental', 'natural-chew'] },
+  ultimate: { name: 'Breed Box',  items: 'Full curated box',           price: 6499,  description: 'Daily dental, natural chew, plus breed-specific spotlight product with education card', slots: ['daily-dental', 'natural-chew', 'breed-spotlight'] },
 }
 
 export const DOG_SIZE_LABELS: Record<DogSize, { label: string; weight: string }> = {

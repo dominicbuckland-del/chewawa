@@ -123,7 +123,7 @@ export default function SubscribePage() {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-charcoal-muted">Plan</span>
-                <span className="font-heading text-charcoal">{selectedPlan.name} ({selectedPlan.chews} chews)</span>
+                <span className="font-heading text-charcoal">{selectedPlan.name} ({selectedPlan.items})</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-charcoal-muted">Dog size</span>

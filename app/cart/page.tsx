@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/components/CartProvider'
 import { formatPrice } from '@/lib/utils'
@@ -7,6 +8,35 @@ import { QuantitySelector } from '@/components/ui/QuantitySelector'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, total, clearCart } = useCart()
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+
+  async function handleCheckout() {
+    setCheckoutLoading(true)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map(item => ({
+            name: item.name,
+            price: item.isSubscription && item.subscriptionPrice ? item.subscriptionPrice : item.price,
+            quantity: item.quantity,
+            image: item.image || undefined,
+          })),
+        }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        alert(data.error || 'Checkout failed. Please try again.')
+        setCheckoutLoading(false)
+      }
+    } catch {
+      alert('Something went wrong. Please try again.')
+      setCheckoutLoading(false)
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -71,8 +101,8 @@ export default function CartPage() {
             <span className="text-xl font-heading text-charcoal">{formatPrice(total)}</span>
           </div>
           <p className="text-xs text-charcoal-muted mt-3">Shipping calculated at checkout. Free on all orders.</p>
-          <Button variant="primary" size="lg" className="w-full mt-6">
-            Proceed to Checkout
+          <Button variant="primary" size="lg" className="w-full mt-6" onClick={handleCheckout} loading={checkoutLoading}>
+            {checkoutLoading ? 'Redirecting to checkout...' : 'Proceed to Checkout'}
           </Button>
           <div className="flex justify-between mt-4">
             <Link href="/products" className="text-sm text-forest hover:underline">

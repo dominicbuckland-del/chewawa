@@ -25,9 +25,25 @@ Subscription + one-time purchase model. Stripe for payments, Supabase for auth +
 - `bg-sand` = `#E8DDD0` (borders/dividers)
 
 ## Fonts
-- Display: Central Avenue (`--font-display`) -- logo, hero headlines
-- Heading: TT Norms Bold (`--font-heading`) -- subheadings, product names, nav
-- Body: New Grotesk Square SIX (`--font-body`) -- body text, UI
+- Display: Fredoka (`--font-display`) -- logo, hero headlines, section titles
+- Body: Nunito (`--font-body`) -- body text, UI, navigation
+
+## Order Flow
+1. Customer adds to cart -> clicks checkout
+2. POST /api/checkout creates Stripe Checkout Session
+3. Customer pays on Stripe hosted page
+4. Stripe webhook (POST /api/stripe/webhook) fires checkout.session.completed
+5. Webhook creates order in Supabase `orders` table
+6. Webhook sends customer confirmation email via Resend
+7. Webhook forwards order to supplier email for fulfilment
+8. Supplier ships, you update tracking via admin dashboard (/admin)
+
+## Environment Variables Needed
+- STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
+- NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+- RESEND_API_KEY
+- SUPPLIER_EMAIL (where order forwarding emails go)
+- ADMIN_API_KEY (simple auth for /admin and /api/orders)
 
 ## Coding Conventions
 - All components use Tailwind + custom tokens

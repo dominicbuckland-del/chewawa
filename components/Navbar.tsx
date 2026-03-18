@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from './CartProvider'
 import { CartDrawer } from './cart/CartDrawer'
+import { Logo } from './Logo'
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -22,8 +23,8 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="font-display text-2xl text-forest tracking-wide">
-              chewawa
+            <Link href="/" className="flex items-center">
+              <Logo size="sm" />
             </Link>
 
             {/* Desktop links */}

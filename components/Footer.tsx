@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Logo } from './Logo'
 
 const footerLinks = {
   Shop: [
@@ -25,8 +26,8 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="font-display text-2xl text-white tracking-wide">
-              chewawa
+            <Link href="/" className="flex items-center">
+              <Logo size="sm" color="white" />
             </Link>
             <p className="mt-4 text-sm text-cream/60 leading-relaxed">
               Australian-made dental chews that clean teeth and keep tails wagging.
